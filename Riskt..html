@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<meta name='robots' content='noindex,nofollow'>
+
+ 
+<style></style>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Risk Management Tool</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #111;
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 1.6em;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background-color: #1a1a1a;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.05);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-size: 0.9em;
+      color: #ccc;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: none;
+      background-color: #2a2a2a;
+      color: #fff;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      background-color: #00b894;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #019875;
+    }
+    .output {
+      margin-top: 25px;
+      padding: 15px;
+      background-color: #222;
+      border-radius: 8px;
+    }
+    .output div {
+      margin-bottom: 8px;
+    }
+    .value {
+      color: #00b894;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📊 Risk Management Tool</h1>
+
+    <label>Accountgröße (€)</label>
+    <input type="number" id="account" value="10000">
+
+    <label>Risiko pro Trade (%)</label>
+    <input type="number" id="riskPercent" value="0.6" step="0.01">
+
+    <label>Leverage</label>
+    <input type="number" id="leverage" value="2" step="0.1">
+
+    <label>Stop-Loss (%)</label>
+    <input type="number" id="stopLoss" placeholder="z. B. 0.8" step="0.01">
+
+    <button onclick="calculate()">Berechnen</button>
+
+    <div class="output" id="output">
+      <div>🔹 Marge: <span class="value" id="margeValue">-</span> €</div>
+      <div>🔹 Exposure (mit Hebel): <span class="value" id="exposureValue">-</span> €</div>
+      <div>🔹 Risiko in €: <span class="value" id="riskValue">-</span></div>
+    </div>
+  </div>
+
+  <script>
+    function calculate() {
+      const account = parseFloat(document.getElementById("account").value);
+      const riskPercent = parseFloat(document.getElementById("riskPercent").value) / 100;
+      const leverage = parseFloat(document.getElementById("leverage").value);
+      const stopLoss = parseFloat(document.getElementById("stopLoss").value) / 100;
+
+      if (isNaN(account) || isNaN(riskPercent) || isNaN(leverage) || isNaN(stopLoss) || stopLoss === 0) {
+        alert("Bitte alle Werte korrekt eingeben!");
+        return;
+      }
+
+      const riskEuro = account * riskPercent;
+      const marge = riskEuro / stopLoss;
+      const exposure = marge * leverage;
+
+      document.getElementById("margeValue").textContent = marge.toFixed(2);
+      document.getElementById("exposureValue").textContent = exposure.toFixed(2);
+      document.getElementById("riskValue").textContent = riskEuro.toFixed(2) + " €";
+    }
+  </script>
+</body>
+</html>
+<script></script>
+</body>
+</html>
